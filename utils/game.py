@@ -4,12 +4,23 @@ from utils.card import Card
 
 class Board:
     def __init__(self):
+        """
+        Class that represents the game board.
+        :attribute players: A list of Player instances involved in the game.
+        :attribute turn_count: An integer counting the number of turns played.
+        :attribute active_cards: A list of Card instances currently in play.
+        :attribute history_cards: A list of all Card instances played so far.
+        """
         self.players: list[Player] = []
         self.turn_count = 0
         self.active_cards: list[Card] = []
         self.history_cards: list[Card] = []
 
     def __str__(self):
+        """
+        Method to provide a readable string representation of the game state.
+        :return: A string summary of the current board state.
+        """
         player_str = "\n".join(str(player) for player in self.players)
         return (
             f"===== GAME STATE =====\n"
@@ -21,9 +32,20 @@ class Board:
         )
 
     def isAllPlayersOutOfCards(self):
+        """
+        Method that checks if all players have no cards left.
+        :return: True if all players are out of cards, False otherwise.
+        """
         return not any(player.number_of_cards == 0 for player in self.players)
 
     def start_game(self):
+        """
+        Method to start and control the main game loop.
+        - Creates and fills a deck.
+        - Shuffles and distributes cards to all players.
+        - Repeats turn-based play until no cards are left.
+        - Displays the result of each turn.
+        """
         deck = Deck()
         deck.fill_deck()
         deck.shuffle()
